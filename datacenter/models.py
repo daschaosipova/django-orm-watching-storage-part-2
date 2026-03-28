@@ -50,11 +50,7 @@ def format_duration(duration):
 
 
 def is_visit_long(visit, minutes=60):
-    now = django.utils.timezone.localtime()
-    try:
-        duration = localtime(visit.leaved_at) - localtime(visit.entered_at)
-    except TypeError:
-        duration = now - localtime(visit.entered_at)
+    duration = get_duration(visit)
     if int(duration.total_seconds()) < minutes * 60:
         return False
     else:
