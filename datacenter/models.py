@@ -43,15 +43,18 @@ def get_duration(visit):
 
 
 def format_duration(duration):
+    minutes_in_hour = 60
+    seconds_in_minute = 60
+    seconds_in_hour = minutes_in_hour * seconds_in_minute
     duration_in_seconds = duration.total_seconds()
-    hours = int(duration_in_seconds // 3600)
-    minutes = int((duration_in_seconds - hours * 3600) // 60)
+    hours = int(duration_in_seconds // seconds_in_hour)
+    minutes = int(
+        (duration_in_seconds - hours * seconds_in_hour) // seconds_in_minute
+    )
     return f"{hours}ч {minutes}мин"
 
 
 def is_visit_long(visit, minutes=60):
+    seconds_in_minute = 60
     duration = get_duration(visit)
-    if int(duration.total_seconds()) < minutes * 60:
-        return False
-    else:
-        return True
+    return int(duration.total_seconds()) < minutes * seconds_in_minute
